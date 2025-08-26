@@ -15,7 +15,7 @@ phases:
     commands:
       - echo "Updating Lambda function code..."
       - |
-        FUNCTION_NAME="finora"
+        FUNCTION_NAME="finora-api"
         REGION="eu-west-3"
         
         # Mise à jour du code de la Lambda

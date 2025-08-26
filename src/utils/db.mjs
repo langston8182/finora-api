@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
+const env = process.env.ENVIRONMENT || "preprod";
+const uri = env === "prod" ? process.env.MONGODB_URI_PROD : process.env.MONGODB_URI_PREPROD;
 const dbName = process.env.DB_NAME || "finora";
 
 if (!uri) {

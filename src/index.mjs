@@ -1,12 +1,12 @@
 // handlers/router.handler.mjs
-import { handleExpenses } from "../src/controllers/expenses.controller.mjs";
-import { handleIncomes } from "../src/controllers/incomes.controller.mjs";
-import { handleCategories } from "../src/controllers/categories.controller.mjs";
-import { handleFixedExpenses } from "../src/controllers/fixed-expenses.controller.mjs";
-import { handleRecurringIncomes } from "../src/controllers/recurring-incomes.controller.mjs";
-import { handleSummary } from "../src/controllers/summary.controller.mjs";
-import { handleForecast } from "../src/controllers/forecast.controller.mjs";
-import { ok, notFound } from "../src/utils/http.mjs";
+//import { handleExpenses } from "controllers/expenses.controller.mjs";
+//import { handleIncomes } from "controllers/incomes.controller.mjs";
+import { handleCategories } from "./controllers/categories.controller.mjs";
+//import { handleFixedExpenses } from "controllers/fixed-expenses.controller.mjs";
+//import { handleRecurringIncomes } from "controllers/recurring-incomes.controller.mjs";
+//import { handleSummary } from "controllers/summary.controller.mjs";
+//import { handleForecast } from "controllers/forecast.controller.mjs";
+import { ok, notFound } from "./utils/http.mjs";
 
 // normalise un path comme /api/v1/expenses/123 -> ["expenses", "123"]
 function seg(event) {

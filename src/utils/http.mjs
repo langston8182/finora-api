@@ -18,6 +18,11 @@ export function serverError(err) {
     return { statusCode: 500, headers: cors(), body: JSON.stringify({ error: "Internal error" }) };
 }
 
+export function unauthorized(message = "Unauthorized", originOrEvent) {
+    const origin = typeof originOrEvent === "string" ? originOrEvent : originFromEvent(originOrEvent);
+    return { statusCode: 401, headers: buildCorsHeaders(origin), body: JSON.stringify({ error: message }) };
+}
+
 export function redirect(location, originOrEvent) {
     const origin = typeof originOrEvent === "string" ? originOrEvent : originFromEvent(originOrEvent);
     const headers = buildCorsHeaders(origin);

@@ -17,6 +17,13 @@ export function serverError(err) {
     console.error(err);
     return { statusCode: 500, headers: cors(), body: JSON.stringify({ error: "Internal error" }) };
 }
+
+export function redirect(location, originOrEvent) {
+    const origin = typeof originOrEvent === "string" ? originOrEvent : originFromEvent(originOrEvent);
+    const headers = buildCorsHeaders(origin);
+    return { statusCode: 302, headers: { ...headers, Location: location }, body: "" };
+}
+
 export function cors() {
     return {
         "Access-Control-Allow-Origin": "*",

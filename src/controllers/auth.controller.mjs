@@ -4,6 +4,29 @@ import {exchangeCodeForTokens, fetchUserInfo, buildLogoutUrl} from "../services/
 import {safeDecodeJwt} from "../models/auth.model.mjs";
 import {okWithCookies, redirectWithCookies, makeCookie} from "../utils/http.mjs";
 
+function getOrigin(event) {
+    return event?.headers?.origin || event?.headers?.Origin || "";
+}
+
+function computeRedirectUri(event) {
+    const env = (process.env.ENVIRONMENT || "preprod").toLowerCase();
+    const origin = getOrigin(event);
+    const UI_PROD_BASE = process.env.UI_PROD_BASE || "https://finora.cyrilmarchive.com";
+    const UI_PREPROD_BASE = process.env.UI_PREPROD_BASE || "https://finora-preprod.cyrilmarchive.com";
+
+    // Dev local (appel depuis Vite)
+    if (origin.startsWith("http://localhost:5173")) {
+        return "http://localhost:5173/auth/callback";
+    }
+
+    // Environnements
+    if (env === "prod") {
+        return `${UI_PROD_BASE}/auth/callback`;
+    }
+    // défaut: preprod
+    return `${UI_PREPROD_BASE}/auth/callback`;
+}
+
 // Simple cookie parser to read a cookie value from the Cookie header
 function getCookieValue(cookieHeader, name) {
     if (!cookieHeader) return null;
@@ -29,9 +52,11 @@ export async function handleAuth(event) {
         if (!code) return badRequest("Missing 'code'", event);
 
         try {
+            const redirectUri = computeRedirectUri(event);
             const tokens = await exchangeCodeForTokens({
                 code,
                 codeVerifier: query.code_verifier || query.codeVerifier || null,
+                redirectUri
             });
 
             // Durées

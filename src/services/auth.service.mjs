@@ -26,13 +26,13 @@ const AUTH_LOGOUT_REDIRECT_URI = process.env.AUTH_LOGOUT_REDIRECT_URI || null;
  *  - PKCE: fournir `codeVerifier`
  *  - Client secret: si COGNITO_CLIENT_SECRET est présent, on utilise Basic Auth
  */
-export async function exchangeCodeForTokens({ code, codeVerifier = null }) {
+export async function exchangeCodeForTokens({ code, codeVerifier = null, redirectUri }) {
     const tokenUrl = `${COGNITO_DOMAIN}/oauth2/token`;
 
     const form = new URLSearchParams();
     form.set("grant_type", "authorization_code");
     form.set("client_id", COGNITO_CLIENT_ID);
-    form.set("redirect_uri", AUTH_REDIRECT_URI);
+    form.set("redirect_uri", redirectUri || AUTH_REDIRECT_URI);
     form.set("code", code);
     if (codeVerifier) {
         form.set("code_verifier", codeVerifier);

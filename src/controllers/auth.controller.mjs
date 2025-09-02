@@ -96,7 +96,7 @@ export async function handleAuth(event) {
             headers.cookie ||
             headers.Cookie ||
             "";
-        const accessToken = getCookieValue(cookieHeader, "finora_at");
+        const accessToken = getCookieValue(cookieHeader, "access_token");
         if (!accessToken) {
             return unauthorized("access_token manquant dans les cookies", event);
         }

@@ -6,7 +6,6 @@ import { handleFixedExpenses } from "./controllers/fixed-expenses.controller.mjs
 import { handleRecurringIncomes } from "./controllers/recurring-incomes.controller.mjs";
 import { handleSummary } from "./controllers/summary.controller.mjs";
 import { handleForecast } from "./controllers/forecast.controller.mjs";
-import { handleAuth } from "./controllers/auth.controller.mjs";
 import { ok, notFound } from "./utils/http.mjs";
 
 // normalise un path comme /api/v1/expenses/123 -> ["expenses", "123"]
@@ -36,7 +35,6 @@ export const handler = async (event) => {
     if (s[0] === "recurring-incomes") return handleRecurringIncomes(event);
     if (s[0] === "summary") return handleSummary(event);
     if (s[0] === "forecast" && s[1] === "calc") return handleForecast(event);
-    if (s[0] === "auth") return handleAuth(event);
 
     return notFound("Route not found");
 };
